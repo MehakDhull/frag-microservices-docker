@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fragments UI</title>
+    <meta name="description" content="Fragments Microservice Web UI">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#2196f3">
+</head>
+<body>
+    <div id="app">
+        <header class="header">
+            <h1>Fragments Microservice</h1>
+            <div class="header-info">
+                <span>Local Development Mode</span>
+            </div>
+        </header>
+
+        <main class="main-content">
+            <div id="app-screen" class="screen">
+                <div class="controls">
+                    <div class="tabs">
+                        <button class="tab-btn active" data-tab="create">Create Fragment</button>
+                        <button class="tab-btn" data-tab="list">My Fragments</button>
+                    </div>
+                    
+                    <div id="offline-status" class="offline-status hidden">
+                        <span>📱 Offline Mode - Changes will sync when connected</span>
+                    </div>
+                </div>
+
+                <div id="create-tab" class="tab-content">
+                    <div class="create-form">
+                        <h3>Create New Fragment</h3>
+                        <form id="fragment-form">
+                            <div class="form-group">
+                                <label for="fragment-type">Fragment Type:</label>
+                                <select id="fragment-type" class="form-control">
+                                    <option value="text/plain">Text (.txt)</option>
+                                    <option value="text/markdown">Markdown (.md)</option>
+                                    <option value="text/html">HTML (.html)</option>
+                                    <option value="text/csv">CSV (.csv)</option>
+                                    <option value="application/json">JSON (.json)</option>
+                                    <option value="application/yaml">YAML (.yaml)</option>
+                                    <option value="image/png">PNG Image</option>
+                                    <option value="image/jpeg">JPEG Image</option>
+                                    <option value="image/webp">WebP Image</option>
+                                    <option value="image/gif">GIF Image</option>
+                                    <option value="image/avif">AVIF Image</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="fragment-content">Content:</label>
+                                <div id="text-input" class="content-input">
+                                    <textarea id="fragment-text" class="form-control" rows="10" 
+                                              placeholder="Enter your fragment content here..."></textarea>
+                                </div>
+                                <div id="file-input" class="content-input hidden">
+                                    <input type="file" id="fragment-file" class="form-control" 
+                                           accept="image/*">
+                                </div>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary btn-large">
+                                Create Fragment
+                            </button>
+                        </form>
+                    </div>
+                </div>
+
+                <div id="list-tab" class="tab-content hidden">
+                    <div class="fragments-list">
+                        <h3>My Fragments</h3>
+                        <div class="list-controls">
+                            <button id="refresh-btn" class="btn btn-secondary">Refresh</button>
+                            <div class="search-box">
+                                <input type="text" id="search-input" placeholder="Search fragments..." 
+                                       class="form-control">
+                            </div>
+                        </div>
+                        <div id="fragments-container" class="fragments-grid">
+                            <!-- Fragments will be loaded here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Modal for editing fragments -->
+        <div id="edit-modal" class="modal hidden">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Edit Fragment</h3>
+                    <span class="close" id="close-modal">&times;</span>
+                </div>
+                <div class="modal-body">
+                    <form id="edit-form">
+                        <div class="form-group">
+                            <label>Fragment ID:</label>
+                            <span id="edit-fragment-id" class="fragment-id"></span>
+                        </div>
+                        <div class="form-group">
+                            <label>Type:</label>
+                            <span id="edit-fragment-type" class="fragment-type"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="edit-content">Content:</label>
+                            <textarea id="edit-content" class="form-control" rows="10"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="convert-to">Convert to:</label>
+                            <select id="convert-to" class="form-control">
+                                <!-- Options populated dynamically -->
+                            </select>
+                        </div>
+                        <div class="modal-actions">
+                            <button type="submit" class="btn btn-primary">Update Fragment</button>
+                            <button type="button" class="btn btn-danger" id="delete-fragment">
+                                Delete Fragment
+                            </button>
+                            <button type="button" class="btn btn-secondary" id="cancel-edit">
+                                Cancel
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div id="loading" class="loading hidden">
+            <div class="spinner"></div>
+            <p>Loading...</p>
+        </div>
+    </div>
+</body>
+</html>
